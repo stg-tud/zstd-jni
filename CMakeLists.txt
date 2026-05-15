@@ -1,6 +1,12 @@
 cmake_minimum_required(VERSION 3.5)
 include(CheckCCompilerFlag)
 project(zstd-jni C ASM)
+
+set(CMAKE_C_COMPILER clang)
+set(CMAKE_CXX_COMPILER clang++)
+add_compile_options(-flto)
+add_link_options(-flto -fuse-ld=gold -Wl,-plugin-opt=save-temps)
+
 file(STRINGS "version" NATIVE_VERSION)
 find_package(JNI)
 include_directories("src/main/native" "src/main/native/common" "src/main/native/compress" "src/main/native/decompress" "src/main/native/dictBuilder" "src/main/native/legacy")
